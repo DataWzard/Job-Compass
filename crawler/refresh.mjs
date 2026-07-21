@@ -7,8 +7,8 @@ const allSources = [...new Map([...seedSources, ...discoveredSources].map(source
 const sourceTypes = ["greenhouse", "ashby", "lever", "smartrecruiters", "page"];
 const buckets = Object.fromEntries(sourceTypes.map(type => [type, allSources.filter(source => source.type === type)]));
 const sources = [];
-for (let index = 0; sources.length < 200 && sourceTypes.some(type => buckets[type][index]); index++) {
-  for (const type of sourceTypes) if (buckets[type][index] && sources.length < 200) sources.push(buckets[type][index]);
+for (let index = 0; sources.length < 1000 && sourceTypes.some(type => buckets[type][index]); index++) {
+  for (const type of sourceTypes) if (buckets[type][index] && sources.length < 1000) sources.push(buckets[type][index]);
 }
 const timeout = 15000;
 const clean = (html = "") => html.replace(/<script[\s\S]*?<\/script>/gi, " ").replace(/<style[\s\S]*?<\/style>/gi, " ").replace(/<[^>]+>/g, " ").replace(/&nbsp;/gi, " ").replace(/&amp;/gi, "&").replace(/&quot;/gi, '"').replace(/&#39;/gi, "'").replace(/\s+/g, " ").trim();
@@ -44,9 +44,22 @@ async function page(source) {
 }
 const scanners = { greenhouse, ashby, lever, smartrecruiters, page };
 const jobs = [], failures = [];
-for (const source of sources) try { const scanner = scanners[source.type]; if (!scanner) throw new Error(`Unsupported source type ${source.type}`); jobs.push(...await scanner(source)); } catch (error) { failures.push(`${source.name}: ${error.message}`); }
-const unique = [...new Map(jobs.filter(job => job.url).map(job => [job.url, { ...job, description: (job.description || "").slice(0, 2500) }])).values()].sort((a, b) => a.company.localeCompare(b.company) || a.title.localeCompare(b.title)).slice(0, 5000);
-const payload = JSON.stringify({ updatedAt: new Date().toISOString(), sourceCount: sources.length, jobCount: unique.length, failures, jobs: unique }, null, 2) + "\n";
+const concurrency = 12;
+for (let start = 0; start < sources.length; start += concurrency) {
+  const batch = await Promise.all(sources.slice(start, start + concurrency).map(async source => {
+    try {
+      const scanner = scanners[source.type];
+      if (!scanner) throw new Error(`Unsupported source type ${source.type}`);
+      return await scanner(source);
+    } catch (error) {
+      failures.push(`${source.name}: ${error.message}`);
+      return [];
+    }
+  }));
+  for (const result of batch) jobs.push(...result);
+}
+const unique = [...new Map(jobs.filter(job => job.url).map(job => [job.url, { ...job, description: (job.description || "").slice(0, 1200) }])).values()].sort((a, b) => a.company.localeCompare(b.company) || a.title.localeCompare(b.title)).slice(0, 12000);
+const payload = JSON.stringify({ updatedAt: new Date().toISOString(), refreshCadence: "hourly", sourceCount: sources.length, jobCount: unique.length, failures, jobs: unique }, null, 2) + "\n";
 for (const directory of ["docs/data", "job-compass-cloudflare-ready/public/data"]) { await mkdir(directory, { recursive: true }); await writeFile(`${directory}/jobs.json`, payload); }
 console.log(`Indexed ${unique.length} jobs from ${sources.length} public ATS boards.`);
 if (failures.length) console.warn(failures.join("\n"));

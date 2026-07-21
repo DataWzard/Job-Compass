@@ -1,9 +1,13 @@
-﻿name: Refresh public job index
+name: Refresh public job index
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "17 */8 * * *"
+    - cron: "23 * * * *"
+
+concurrency:
+  group: public-job-index-refresh
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -11,6 +15,7 @@ permissions:
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -26,4 +31,5 @@ jobs:
           git config user.email "job-compass-bot@users.noreply.github.com"
           git add crawler/discovered-sources.json docs/data/jobs.json job-compass-cloudflare-ready/public/data/jobs.json
           git diff --cached --quiet || git commit -m "Refresh public job index"
+          git pull --rebase
           git push

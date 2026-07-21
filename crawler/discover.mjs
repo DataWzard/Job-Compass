@@ -1,4 +1,4 @@
-﻿import { readFile, writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 
 const output = new URL("./discovered-sources.json", import.meta.url);
 let existing = [];
@@ -31,7 +31,7 @@ try {
       const value = JSON.parse(row); const url = new URL(value.url); const slug = url.pathname.split("/").filter(Boolean)[0];
       if (definition.type === "page" && url.hostname.endsWith(".icims.com") && /job|career/i.test(url.pathname)) pages.add(url.href);
       else if (url.hostname === definition.host && slug && !/^(embed|search|api|assets|static|privacy|terms)$/i.test(slug)) slugs.add(slug);
-      if (slugs.size + pages.size >= 100) break;
+      if (slugs.size + pages.size >= 250) break;
     } catch {}
     for (const slug of slugs) found.push({ type: definition.type, slug, name: slug });
     for (const url of pages) found.push({ type: "page", url, name: new URL(url).hostname });
