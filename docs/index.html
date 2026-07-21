@@ -1,0 +1,21 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Discover and verify public job listings from career pages and ATS boards.">
+  <title>Job Compass - Focused job discovery</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+<header class="topbar"><a class="brand" href="#top"><b>JC</b><span>JOB COMPASS</span></a><nav><a href="#search">Search</a><a href="#results">Results</a><a href="#how">How it works</a></nav><div class="live"><i></i>Public pages only</div></header>
+<main>
+<section class="hero" id="top"><div class="eyebrow">YOUR PERSONAL JOB DISCOVERY WORKBENCH</div><h1>Find the roles worth<br><em>your time.</em></h1><p>Search across public company career pages and ATS boards. Job Compass discovers likely listings, verifies their metadata and descriptions, and turns the matches into one clean shortlist.</p><div class="coverage"><span>GREENHOUSE</span><span>ASHBY</span><span>LEVER</span><span>SMARTRECRUITERS</span><span>ICIMS*</span><span>CAREER PAGES</span></div></section>
+<section class="workspace search-only" id="search"><div class="panel filters filters-wide"><div class="heading"><span>01</span><div><h2>Search the job market</h2><p>Enter what you want. Job Compass discovers and verifies public job listings for you.</p></div></div><div class="grid"><label>Job titles<input id="titles" value="business analyst, data analyst, operations analyst" placeholder="Business analyst, data analyst"></label><label>Keywords<input id="keywords" value="SQL, Tableau, process improvement" placeholder="SQL, Tableau, process improvement"></label><label>Locations<input id="locations" placeholder="Phoenix, Remote, Arizona"></label><label>Exclude<input id="exclude" value="senior director, commission only" placeholder="Senior director, commission only"></label></div><div class="remote-row"><button class="switch" id="remote-only" type="button" aria-pressed="false" aria-label="Remote roles only"><span></span></button><div><strong>Remote roles only</strong><small>Include jobs explicitly marked remote</small></div></div><button class="scan" id="scan" type="button">Search jobs <span>&rarr;</span></button><p class="status ready" id="status" aria-live="polite">Sample results are shown. Run a search to discover current listings.</p><div class="notice discovery"><b>&nearr;</b><p><strong>Verified public listings.</strong> Results come from a free index refreshed throughout the day from public ATS feeds, career-page metadata, and job-description HTML. Login-only pages are not bypassed.</p></div></div></section>
+<section class="results" id="results"><div class="results-head"><div><div class="eyebrow">YOUR SHORTLIST</div><h2><span id="result-count">3</span> opportunities</h2><p>Review, annotate, select, and export. Notes stay in this browser session.</p></div><button class="export" id="export" type="button">&darr; Export all as CSV</button></div><div class="tools"><input id="filter" aria-label="Filter results" placeholder="Filter by title, company, or location..."><button id="select-all" type="button">Select all</button></div><div class="job-list" id="job-list"></div></section>
+<section class="how" id="how"><div><div class="eyebrow">BUILT FOR A FOCUSED SEARCH</div><h2>From the open web to a useful list.</h2></div><ol><li><b>1</b><strong>Describe the role</strong><p>Enter titles, skills, locations, and exclusions.</p></li><li><b>2</b><strong>Discover and verify</strong><p>Public job pages are found, fetched, and checked.</p></li><li><b>3</b><strong>Make it yours</strong><p>Add notes and export a tidy CSV for follow-up.</p></li></ol></section>
+</main>
+<footer><strong>JOB COMPASS</strong><p>Public job discovery, organized.</p><small>*Dynamic or protected pages may return limited results.</small></footer>
+</body>
+</html>

@@ -1,0 +1,29 @@
+﻿name: Refresh public job index
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */8 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Expand the ATS source catalog
+        run: node crawler/discover.mjs
+      - name: Refresh ATS jobs
+        run: node crawler/refresh.mjs
+      - name: Publish updated index
+        run: |
+          git config user.name "job-compass-bot"
+          git config user.email "job-compass-bot@users.noreply.github.com"
+          git add crawler/discovered-sources.json docs/data/jobs.json job-compass-cloudflare-ready/public/data/jobs.json
+          git diff --cached --quiet || git commit -m "Refresh public job index"
+          git push

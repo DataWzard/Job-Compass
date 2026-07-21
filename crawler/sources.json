@@ -1,0 +1,8 @@
+﻿[
+  { "type": "greenhouse", "slug": "figma", "name": "Figma" },
+  { "type": "ashby", "slug": "Mandarine", "name": "Mandarine" },
+  { "type": "ashby", "slug": "PaveBank", "name": "Pave Bank" },
+  { "type": "smartrecruiters", "slug": "Endava", "name": "Endava" },
+  { "type": "smartrecruiters", "slug": "Acumatica", "name": "Acumatica" },
+  { "type": "smartrecruiters", "slug": "NCS3", "name": "NCS" }
+]
