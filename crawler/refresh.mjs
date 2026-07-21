@@ -1,9 +1,15 @@
-﻿import { readFile, mkdir, writeFile } from "node:fs/promises";
+import { readFile, mkdir, writeFile } from "node:fs/promises";
 
 const seedSources = JSON.parse((await readFile(new URL("./sources.json", import.meta.url), "utf8")).replace(/^\uFEFF/, ""));
 let discoveredSources = [];
 try { discoveredSources = JSON.parse((await readFile(new URL("./discovered-sources.json", import.meta.url), "utf8")).replace(/^\uFEFF/, "")); } catch {}
-const sources = [...new Map([...seedSources, ...discoveredSources].map(source => [`${source.type}:${source.slug || source.url}`, source])).values()].slice(0, 200);
+const allSources = [...new Map([...seedSources, ...discoveredSources].map(source => [`${source.type}:${source.slug || source.url}`, source])).values()];
+const sourceTypes = ["greenhouse", "ashby", "lever", "smartrecruiters", "page"];
+const buckets = Object.fromEntries(sourceTypes.map(type => [type, allSources.filter(source => source.type === type)]));
+const sources = [];
+for (let index = 0; sources.length < 200 && sourceTypes.some(type => buckets[type][index]); index++) {
+  for (const type of sourceTypes) if (buckets[type][index] && sources.length < 200) sources.push(buckets[type][index]);
+}
 const timeout = 15000;
 const clean = (html = "") => html.replace(/<script[\s\S]*?<\/script>/gi, " ").replace(/<style[\s\S]*?<\/style>/gi, " ").replace(/<[^>]+>/g, " ").replace(/&nbsp;/gi, " ").replace(/&amp;/gi, "&").replace(/&quot;/gi, '"').replace(/&#39;/gi, "'").replace(/\s+/g, " ").trim();
 const workplace = (value = "") => /hybrid/i.test(value) ? "Hybrid" : /remote|work from home|distributed/i.test(value) ? "Remote" : /on[- ]?site|in office/i.test(value) ? "On-site" : "Unknown";
