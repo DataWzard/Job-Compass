@@ -23,7 +23,9 @@ jobs:
           node-version: 22
       - name: Expand the ATS source catalog
         run: node crawler/discover.mjs
-      - name: Refresh ATS jobs
+      - name: Test search agents
+        run: node --test crawler/tests/*.test.mjs
+      - name: Run parallel search agents
         run: node crawler/refresh.mjs
       - name: Publish updated index
         run: |

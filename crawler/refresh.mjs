@@ -1,4 +1,5 @@
 import { readFile, mkdir, writeFile } from "node:fs/promises";
+import { retainStaleJobs, runSearchAgents, sourceKey, verifyAndEnrich } from "./agents.mjs";
 
 const seedSources = JSON.parse((await readFile(new URL("./sources.json", import.meta.url), "utf8")).replace(/^\uFEFF/, ""));
 let discoveredSources = [];
@@ -19,16 +20,22 @@ async function json(url) { const response = await fetch(url, { headers: { accept
 async function greenhouse(source) { const data = await json(`https://boards-api.greenhouse.io/v1/boards/${encodeURIComponent(source.slug)}/jobs?content=true`); return (data.jobs || []).map(job => { const description = clean(job.content || ""); const location = job.location?.name || "Not listed"; return { id: `greenhouse-${job.id}`, title: job.title, company: data.name || source.name, location, workplace: workplace(`${location} ${description.slice(0, 1000)}`), pay: "Not listed", source: "Greenhouse", url: job.absolute_url, posted: dateLabel(job.updated_at), matched: [], description }; }); }
 async function ashby(source) { const data = await json(`https://api.ashbyhq.com/posting-api/job-board/${encodeURIComponent(source.slug)}`); return (data.jobs || []).map(job => { const description = clean(job.descriptionHtml || job.descriptionPlain || ""); const location = job.location || "Not listed"; return { id: `ashby-${job.id || job.jobUrl}`, title: job.title, company: data.organizationName || source.name, location, workplace: workplace(`${job.workplaceType || ""} ${location}`), pay: job.compensation?.compensationTierSummary || "Not listed", source: "Ashby", url: job.jobUrl || job.applyUrl, posted: dateLabel(job.publishedAt), matched: [], description }; }); }
 async function lever(source) { const data = await json(`https://api.lever.co/v0/postings/${encodeURIComponent(source.slug)}?mode=json`); return data.map(job => { const description = clean([job.descriptionPlain, job.additionalPlain, job.lists?.map(item => item.content).join(" ")].filter(Boolean).join(" ")); const location = job.categories?.location || "Not listed"; return { id: `lever-${job.id}`, title: job.text, company: source.name, location, workplace: workplace(`${job.workplaceType || ""} ${location}`), pay: job.salaryRange ? payLabel(job.salaryRange.min, job.salaryRange.max, job.salaryRange.currency, job.salaryRange.interval) : "Not listed", source: "Lever", url: job.hostedUrl || job.applyUrl, posted: "Date not listed", matched: [], description }; }); }
-async function smartrecruiters(source) { const data = await json(`https://api.smartrecruiters.com/v1/companies/${encodeURIComponent(source.slug)}/postings?limit=100`); return (data.content || []).map(job => { const location = [job.location?.city, job.location?.region, job.location?.country].filter(Boolean).join(", ") || "Not listed"; return { id: `smartrecruiters-${job.id}`, title: job.name, company: job.company?.name || source.name, location, workplace: workplace(`${job.location?.remote ? "remote" : ""} ${job.name}`), pay: "Not listed", source: "SmartRecruiters", url: job.ref || `https://jobs.smartrecruiters.com/${source.slug}/${job.id}`, posted: dateLabel(job.releasedDate), matched: [], description: "" }; }); }
-function parseJobMarkup(markup, source, pageUrl) {
+async function smartrecruiters(source) {
+  const data = await json(`https://api.smartrecruiters.com/v1/companies/${encodeURIComponent(source.slug)}/postings?limit=100`);
+  return (data.content || []).map(job => {
+    const location = [job.location?.city, job.location?.region, job.location?.country].filter(Boolean).join(", ") || "Not listed";
+    const slug = clean(job.name).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    return { id: `smartrecruiters-${job.id}`, title: job.name, company: job.company?.name || source.name, location, workplace: workplace(`${job.location?.remote ? "remote" : ""} ${job.name}`), pay: "Not listed", source: "SmartRecruiters", url: `https://jobs.smartrecruiters.com/${source.slug}/${job.id}-${slug}`, posted: dateLabel(job.releasedDate), matched: [], description: "" };
+  });
+}function parseJobMarkup(markup, source, pageUrl) {
   const jobs = [];
   for (const match of markup.matchAll(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) try {
     const parsed = JSON.parse(match[1].replace(/<!--|-->/g, "")); const nodes = (Array.isArray(parsed) ? parsed : parsed?.["@graph"] || [parsed]).flat();
-    for (const item of nodes) if (item?.["@type"] === "JobPosting") {
+    for (const item of nodes) if ((Array.isArray(item?.["@type"]) ? item["@type"] : [item?.["@type"]]).includes("JobPosting")) {
       const place = Array.isArray(item.jobLocation) ? item.jobLocation[0] : item.jobLocation; const address = place?.address || {};
       const location = item.jobLocationType === "TELECOMMUTE" ? "Remote" : [address.addressLocality, address.addressRegion, address.addressCountry].filter(Boolean).join(", ") || "Not listed";
       const salary = item.baseSalary?.value || item.estimatedSalary?.value || {}; const description = clean(item.description || ""); const company = clean(item.hiringOrganization?.name || source.name);
-      jobs.push({ id: `page-${item.identifier?.value || item.identifier || item.url || jobs.length}`, title: clean(item.title || "Untitled role"), company, location, workplace: workplace(`${location} ${description.slice(0, 1000)}`), pay: payLabel(salary.minValue, salary.maxValue, item.baseSalary?.currency || "USD", salary.unitText || "year"), source: new URL(pageUrl).hostname.includes("icims") ? "iCIMS" : "Career page", url: item.url || pageUrl, posted: dateLabel(item.datePosted), matched: [], description });
+      jobs.push({ id: `page-${item.identifier?.value || item.identifier || item.url || jobs.length}`, title: clean(item.title || "Untitled role"), company, location, workplace: workplace(`${location} ${description.slice(0, 1000)}`), pay: payLabel(salary.minValue, salary.maxValue, item.baseSalary?.currency || "USD", salary.unitText || "year"), source: new URL(pageUrl).hostname.includes("icims") ? "iCIMS" : "Career page", url: item.url ? new URL(item.url, pageUrl).href : pageUrl, posted: dateLabel(item.datePosted), matched: [], description });
     }
   } catch {}
   return jobs;
@@ -43,23 +50,40 @@ async function page(source) {
   return jobs;
 }
 const scanners = { greenhouse, ashby, lever, smartrecruiters, page };
-const jobs = [], failures = [];
-const concurrency = 12;
-for (let start = 0; start < sources.length; start += concurrency) {
-  const batch = await Promise.all(sources.slice(start, start + concurrency).map(async source => {
-    try {
-      const scanner = scanners[source.type];
-      if (!scanner) throw new Error(`Unsupported source type ${source.type}`);
-      return await scanner(source);
-    } catch (error) {
-      failures.push(`${source.name}: ${error.message}`);
-      return [];
-    }
+const refreshedAt = new Date().toISOString();
+let previousJobs = [];
+try {
+  const previous = JSON.parse((await readFile(new URL("../docs/data/jobs.json", import.meta.url), "utf8")).replace(/^\uFEFF/, ""));
+  previousJobs = Array.isArray(previous.jobs) ? previous.jobs : [];
+} catch {}
+const agentRuns = await runSearchAgents(sources, async source => {
+  const scanner = scanners[source.type];
+  if (!scanner) throw new Error(`Unsupported source type ${source.type}`);
+  const jobs = await scanner(source);
+  return jobs.map(job => ({
+    ...job,
+    sourceKey: sourceKey(source),
+    verifiedAt: refreshedAt,
+    lastSeenAt: refreshedAt,
+    stale: false,
   }));
-  for (const result of batch) jobs.push(...result);
+});
+const failures = agentRuns.flatMap(run => run.failures);
+const failedSourceKeys = agentRuns.flatMap(run => run.failedSourceKeys);
+const freshVerification = verifyAndEnrich(agentRuns.flatMap(run => run.jobs), { maxJobs: 12000, descriptionLimit: 1200 });
+const retained = retainStaleJobs(previousJobs, failedSourceKeys, Date.parse(refreshedAt));
+const mergedVerification = verifyAndEnrich([...freshVerification.jobs, ...retained], { maxJobs: 12000, descriptionLimit: 1200 });
+const unique = mergedVerification.jobs;
+const agents = agentRuns.map(({ jobs, failures: agentFailures, failedSourceKeys: agentFailedSourceKeys, ...stats }) => stats);
+const verification = {
+  ...freshVerification.stats,
+  publishedCount: unique.length,
+  retainedStaleCount: retained.length,
+};
+const payload = JSON.stringify({ updatedAt: refreshedAt, refreshCadence: "hourly", mode: "parallel-source-agents", sourceCount: sources.length, jobCount: unique.length, agents, verification, failures, jobs: unique }, null, 2) + "\n";
+for (const directory of ["docs/data", "job-compass-cloudflare-ready/public/data"]) {
+  await mkdir(directory, { recursive: true });
+  await writeFile(`${directory}/jobs.json`, payload);
 }
-const unique = [...new Map(jobs.filter(job => job.url).map(job => [job.url, { ...job, description: (job.description || "").slice(0, 1200) }])).values()].sort((a, b) => a.company.localeCompare(b.company) || a.title.localeCompare(b.title)).slice(0, 12000);
-const payload = JSON.stringify({ updatedAt: new Date().toISOString(), refreshCadence: "hourly", sourceCount: sources.length, jobCount: unique.length, failures, jobs: unique }, null, 2) + "\n";
-for (const directory of ["docs/data", "job-compass-cloudflare-ready/public/data"]) { await mkdir(directory, { recursive: true }); await writeFile(`${directory}/jobs.json`, payload); }
 console.log(`Indexed ${unique.length} jobs from ${sources.length} public ATS boards.`);
 if (failures.length) console.warn(failures.join("\n"));

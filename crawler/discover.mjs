@@ -9,8 +9,25 @@ const definitions = [
   { type: "ashby", pattern: "jobs.ashbyhq.com/*", host: "jobs.ashbyhq.com" },
   { type: "lever", pattern: "jobs.lever.co/*", host: "jobs.lever.co" },
   { type: "smartrecruiters", pattern: "jobs.smartrecruiters.com/*", host: "jobs.smartrecruiters.com" },
-  { type: "page", pattern: "*.icims.com/*", host: null }
+  { type: "page", pattern: "*.icims.com/*", host: null },
+  { type: "page", pattern: "apply.workable.com/*", host: null },
+  { type: "page", pattern: "*.recruitee.com/*", host: null },
+  { type: "page", pattern: "*.teamtailor.com/jobs/*", host: null }
 ];
+function publicJobSeed(url) {
+  const hostname = url.hostname.toLowerCase();
+  const path = url.pathname;
+  const accepted =
+    (hostname !== "www.icims.com" && hostname.endsWith(".icims.com") && /^\/jobs\/\d+\/[^/]+\/job\/?$/i.test(path)) ||
+    (hostname === "apply.workable.com" && /^\/[^/]+\/j\/[^/]+\/?$/i.test(path)) ||
+    (hostname.endsWith(".recruitee.com") && /^\/o\/[^/]+\/?$/i.test(path)) ||
+    (hostname.endsWith(".teamtailor.com") && /^\/jobs\/\d+(?:-[^/]+)?\/?$/i.test(path));
+  if (!accepted) return null;
+  url.protocol = "https:";
+  url.hash = "";
+  for (const key of [...url.searchParams.keys()]) if (/^(source|ref|utm_)/i.test(key)) url.searchParams.delete(key);
+  return url.href;
+}
 const found = [];
 try {
   const catalogs = await fetch("https://index.commoncrawl.org/collinfo.json").then(response => response.json());
@@ -29,7 +46,7 @@ try {
     const slugs = new Set(); const pages = new Set();
     for (const row of rows) try {
       const value = JSON.parse(row); const url = new URL(value.url); const slug = url.pathname.split("/").filter(Boolean)[0];
-      if (definition.type === "page" && url.hostname.endsWith(".icims.com") && /job|career/i.test(url.pathname)) pages.add(url.href);
+      if (definition.type === "page") { const seed = publicJobSeed(url); if (seed) pages.add(seed); }
       else if (url.hostname === definition.host && slug && !/^(embed|search|api|assets|static|privacy|terms)$/i.test(slug)) slugs.add(slug);
       if (slugs.size + pages.size >= 250) break;
     } catch {}
