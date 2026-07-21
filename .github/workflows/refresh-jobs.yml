@@ -2,6 +2,11 @@ name: Refresh public job index
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "crawler/**"
+      - ".github/workflows/refresh-jobs.yml"
   schedule:
     - cron: "23 * * * *"
 

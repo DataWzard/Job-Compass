@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { cleanHtml, extractPay, formatPay, structuredPay } from "../compensation.mjs";
+import { cleanHtml, extractPay, extractPayFromHtml, formatPay, structuredPay } from "../compensation.mjs";
 
 test("extracts the annual range shown in the 2K Greenhouse description", () => {
   const body = `The pay range for this position in California at the start of employment is expected to be between
@@ -21,4 +21,23 @@ test("supports structured salary data and non-US currency", () => {
 
 test("does not mistake dates or a signing bonus for base pay", () => {
   assert.equal(extractPay("Founded in 2005. This role includes a $5,000 signing bonus and strong benefits."), "Not listed");
+});
+test("extracts compensation from ATS-specific HTML elements and classes", () => {
+  assert.equal(
+    extractPayFromHtml('<span class="compensationTierSummary_5yu8i_330">Base $80K - $110K · Offers Equity · Offers Bonus</span>'),
+    "$80,000–$110,000",
+  );
+  assert.equal(
+    extractPayFromHtml('<span class="compensationTierSummary_5yu8i_330">To be discussed $104K - $184K</span>'),
+    "$104,000–$184,000",
+  );
+});
+
+test("extracts an em pay paragraph and paired salary labels", () => {
+  assert.equal(
+    extractPayFromHtml('<em>The pay range for this position is expected to be between $100,000 - $125,000 per Year.</em>'),
+    "$100,000–$125,000/yr",
+  );
+  const abbvie = '<li>Salary Min: <span class="salary-value" data-value="78500">78,500</span></li><li>Salary Max: <span class="salary-value" data-value="141000">141,000</span></li><li>Compensation: USD 78,500 - USD 141,000 - yearly</li>';
+  assert.equal(extractPayFromHtml(abbvie), "$78,500–$141,000/yr");
 });

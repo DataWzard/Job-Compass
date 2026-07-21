@@ -1,4 +1,4 @@
-import { extractPay } from "./compensation.mjs";
+import { extractPay, extractPayFromHtml } from "./compensation.mjs";
 
 export const SEARCH_AGENTS = [
   { id: "greenhouse-agent", label: "Greenhouse", types: ["greenhouse"], concurrency: 12 },
@@ -112,7 +112,8 @@ export function verifyAndEnrich(jobs, { maxJobs = 12000, descriptionLimit = 1200
       const description = String(input.description || "");
       const listedPay = String(input.pay || "").trim();
       const hasListedPay = meaningful(listedPay);
-      const pay = hasListedPay ? listedPay : extractPay(description);
+      const normalizedListedPay = hasListedPay ? extractPay(`compensation ${listedPay}`) : "Not listed";
+      const pay = hasListedPay ? (normalizedListedPay === "Not listed" ? listedPay : normalizedListedPay) : extractPayFromHtml(description);
       const job = {
         ...input,
         title,

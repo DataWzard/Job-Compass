@@ -102,3 +102,12 @@ test("salary is extracted before long descriptions are shortened for the index",
   assert.equal(result.jobs[0].paySource, "Job description");
   assert.equal(result.jobs[0].description.length, 1200);
 });
+test("ATS compensation summaries are normalized before publishing", () => {
+  const result = verifyAndEnrich([
+    job({ pay: "Base $80K - $110K · Offers Equity · Offers Bonus" }),
+    job({ id: "second", url: "https://example.com/jobs/2", pay: "To be discussed $104K - $184K" }),
+  ]);
+  assert.equal(result.jobs[0].pay, "$80,000–$110,000");
+  assert.equal(result.jobs[0].paySource, "ATS field");
+  assert.equal(result.jobs[1].pay, "$104,000–$184,000");
+});

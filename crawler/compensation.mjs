@@ -79,6 +79,32 @@ function unitNear(text, start, end) {
   return normalizeUnit(text.slice(Math.max(0, start - 100), Math.min(text.length, end + 120)));
 }
 
+const salaryElementPattern = /<([a-z][\w:-]*)\b([^>]*(?:salary|compensation|pay|wage|remuneration)[^>]*)>([\s\S]*?)<\/\1>/gi;
+const plainAmountPattern = /(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?(?:\s*[kKmM])?)/;
+
+function pairedSalary(text) {
+  const minimum = text.match(new RegExp(`salary\\s*(?:min|minimum)[^\\d$€£]{0,80}${plainAmountPattern.source}`, "i"));
+  const maximum = text.match(new RegExp(`salary\\s*(?:max|maximum)[^\\d$€£]{0,80}${plainAmountPattern.source}`, "i"));
+  if (!minimum || !maximum) return PAY_NOT_LISTED;
+  const min = amountValue(minimum[1]);
+  const max = amountValue(maximum[1]);
+  if (!min || !max || max < min) return PAY_NOT_LISTED;
+  const currency = currencyCode(text.match(/USD|US\$|CAD|CA\$|C\$|EUR|GBP|[$€£]/i)?.[0]);
+  return formatPay(min, max, currency, text);
+}
+
+export function extractPayFromHtml(value = "") {
+  const raw = decodeHtml(value);
+  const visible = cleanHtml(raw);
+  const paired = pairedSalary(visible);
+  if (paired !== PAY_NOT_LISTED) return paired;
+  for (const match of raw.matchAll(salaryElementPattern)) {
+    const candidate = `compensation ${match[2]} ${cleanHtml(match[3])}`;
+    const pay = extractPay(candidate);
+    if (pay !== PAY_NOT_LISTED) return pay;
+  }
+  return extractPay(visible);
+}
 export function extractPay(value = "") {
   const text = cleanHtml(value);
   for (const match of text.matchAll(rangePattern)) {
@@ -98,10 +124,10 @@ export function extractPay(value = "") {
 }
 
 export function structuredPay(value, fallbackText = "") {
-  if (!value) return extractPay(fallbackText);
+  if (!value) return extractPayFromHtml(fallbackText);
   const salary = value.value ?? value;
   const min = typeof salary === "number" ? salary : salary?.minValue ?? salary?.value;
   const max = typeof salary === "number" ? salary : salary?.maxValue ?? min;
   const formatted = formatPay(min, max, value.currency || salary?.currency || "USD", salary?.unitText || value.unitText || "");
-  return formatted === PAY_NOT_LISTED ? extractPay(fallbackText) : formatted;
+  return formatted === PAY_NOT_LISTED ? extractPayFromHtml(fallbackText) : formatted;
 }

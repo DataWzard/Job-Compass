@@ -1,6 +1,6 @@
 import { readFile, mkdir, writeFile } from "node:fs/promises";
 import { retainStaleJobs, runSearchAgents, sourceKey, verifyAndEnrich } from "./agents.mjs";
-import { cleanHtml, formatPay, structuredPay } from "./compensation.mjs";
+import { cleanHtml, extractPayFromHtml, formatPay, structuredPay } from "./compensation.mjs";
 
 const seedSources = JSON.parse((await readFile(new URL("./sources.json", import.meta.url), "utf8")).replace(/^\uFEFF/, ""));
 let discoveredSources = [];
@@ -30,7 +30,7 @@ function sectionText(value) {
   if (typeof value === "object") return Object.values(value).map(sectionText).join(" ");
   return "";
 }
-async function greenhouse(source) { const data = await json(`https://boards-api.greenhouse.io/v1/boards/${encodeURIComponent(source.slug)}/jobs?content=true`); return (data.jobs || []).map(job => { const description = clean(job.content || ""); const location = job.location?.name || "Not listed"; return { id: `greenhouse-${job.id}`, title: job.title, company: data.name || source.name, location, workplace: workplace(`${location} ${description.slice(0, 1000)}`), pay: "Not listed", source: "Greenhouse", url: job.absolute_url, posted: dateLabel(job.updated_at), matched: [], description }; }); }
+async function greenhouse(source) { const data = await json(`https://boards-api.greenhouse.io/v1/boards/${encodeURIComponent(source.slug)}/jobs?content=true`); return (data.jobs || []).map(job => { const rawDescription = job.content || ""; const description = clean(rawDescription); const location = job.location?.name || "Not listed"; return { id: `greenhouse-${job.id}`, title: job.title, company: data.name || source.name, location, workplace: workplace(`${location} ${description.slice(0, 1000)}`), pay: extractPayFromHtml(rawDescription), paySource: "Job HTML", source: "Greenhouse", url: job.absolute_url, posted: dateLabel(job.updated_at), matched: [], description }; }); }
 async function ashby(source) { const data = await json(`https://api.ashbyhq.com/posting-api/job-board/${encodeURIComponent(source.slug)}?includeCompensation=true`); return (data.jobs || []).map(job => { const description = clean(job.descriptionHtml || job.descriptionPlain || ""); const location = job.location || "Not listed"; return { id: `ashby-${job.id || job.jobUrl}`, title: job.title, company: data.organizationName || source.name, location, workplace: workplace(`${job.workplaceType || ""} ${location}`), pay: job.compensation?.scrapeableCompensationSalarySummary || job.compensation?.compensationTierSummary || "Not listed", source: "Ashby", url: job.jobUrl || job.applyUrl, posted: dateLabel(job.publishedAt), matched: [], description }; }); }
 async function lever(source) { const data = await json(`https://api.lever.co/v0/postings/${encodeURIComponent(source.slug)}?mode=json`); return data.map(job => { const description = clean([job.descriptionPlain, job.additionalPlain, job.lists?.map(item => item.content).join(" ")].filter(Boolean).join(" ")); const location = job.categories?.location || "Not listed"; return { id: `lever-${job.id}`, title: job.text, company: source.name, location, workplace: workplace(`${job.workplaceType || ""} ${location}`), pay: job.salaryRange ? payLabel(job.salaryRange.min, job.salaryRange.max, job.salaryRange.currency, job.salaryRange.interval) : "Not listed", source: "Lever", url: job.hostedUrl || job.applyUrl, posted: "Date not listed", matched: [], description }; }); }
 async function smartrecruiters(source) {
@@ -45,7 +45,7 @@ async function smartrecruiters(source) {
   });
   return details.map(job => {
     const location = [job.location?.city, job.location?.region, job.location?.country].filter(Boolean).join(", ") || "Not listed";
-    const description = clean(sectionText(job.jobAd?.sections || job.sections || job.jobAd));
+    const description = clean(sectionText(job));
     const slug = clean(job.name).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
     return { id: `smartrecruiters-${job.id}`, title: job.name, company: job.company?.name || source.name, location, workplace: workplace(`${job.location?.remote ? "remote" : ""} ${job.name} ${description.slice(0, 1000)}`), pay: "Not listed", source: "SmartRecruiters", url: `https://jobs.smartrecruiters.com/${source.slug}/${job.id}-${slug}`, posted: dateLabel(job.releasedDate), matched: [], description };
   });
@@ -57,8 +57,8 @@ function parseJobMarkup(markup, source, pageUrl) {
     for (const item of nodes) if ((Array.isArray(item?.["@type"]) ? item["@type"] : [item?.["@type"]]).includes("JobPosting")) {
       const place = Array.isArray(item.jobLocation) ? item.jobLocation[0] : item.jobLocation; const address = place?.address || {};
       const location = item.jobLocationType === "TELECOMMUTE" ? "Remote" : [address.addressLocality, address.addressRegion, address.addressCountry].filter(Boolean).join(", ") || "Not listed";
-      const salary = item.baseSalary || item.estimatedSalary; const description = clean(item.description || ""); const company = clean(item.hiringOrganization?.name || source.name);
-      jobs.push({ id: `page-${item.identifier?.value || item.identifier || item.url || jobs.length}`, title: clean(item.title || "Untitled role"), company, location, workplace: workplace(`${location} ${description.slice(0, 1000)}`), pay: structuredPay(salary, description), source: new URL(pageUrl).hostname.includes("icims") ? "iCIMS" : "Career page", url: item.url ? new URL(item.url, pageUrl).href : pageUrl, posted: dateLabel(item.datePosted), matched: [], description });
+      const salary = item.baseSalary || item.estimatedSalary; const rawDescription = String(item.description || ""); const description = clean(rawDescription); const company = clean(item.hiringOrganization?.name || source.name);
+      jobs.push({ id: `page-${item.identifier?.value || item.identifier || item.url || jobs.length}`, title: clean(item.title || "Untitled role"), company, location, workplace: workplace(`${location} ${description.slice(0, 1000)}`), pay: structuredPay(salary, rawDescription), source: new URL(pageUrl).hostname.includes("icims") ? "iCIMS" : "Career page", url: item.url ? new URL(item.url, pageUrl).href : pageUrl, posted: dateLabel(item.datePosted), matched: [], description });
     }
   } catch {}
   return jobs;
