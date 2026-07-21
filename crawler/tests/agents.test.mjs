@@ -95,3 +95,10 @@ test("recent jobs from temporarily failed sources are retained as stale", () => 
   assert.equal(retained.length, 1);
   assert.equal(retained[0].stale, true);
 });
+test("salary is extracted before long descriptions are shortened for the index", () => {
+  const description = `${"background ".repeat(300)}The pay range for this role is $100,000 - $125,000 per year.`;
+  const result = verifyAndEnrich([job({ pay: "Not listed", description })], { descriptionLimit: 1200 });
+  assert.equal(result.jobs[0].pay, "$100,000–$125,000/yr");
+  assert.equal(result.jobs[0].paySource, "Job description");
+  assert.equal(result.jobs[0].description.length, 1200);
+});

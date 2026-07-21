@@ -1,3 +1,5 @@
+import { extractPay } from "./compensation.mjs";
+
 export const SEARCH_AGENTS = [
   { id: "greenhouse-agent", label: "Greenhouse", types: ["greenhouse"], concurrency: 12 },
   { id: "ashby-agent", label: "Ashby", types: ["ashby"], concurrency: 12 },
@@ -81,12 +83,14 @@ const meaningful = value => value && !["Not listed", "Date not listed", "Unknown
 
 function prefer(current, incoming) {
   const description = (incoming.description || "").length > (current.description || "").length ? incoming.description : current.description;
+  const keepCurrentPay = meaningful(current.pay);
   return {
     ...current,
     ...incoming,
     description,
     location: meaningful(current.location) ? current.location : incoming.location,
-    pay: meaningful(current.pay) ? current.pay : incoming.pay,
+    pay: keepCurrentPay ? current.pay : incoming.pay,
+    paySource: keepCurrentPay ? current.paySource : incoming.paySource,
     posted: meaningful(current.posted) ? current.posted : incoming.posted,
     workplace: meaningful(current.workplace) ? current.workplace : incoming.workplace,
     matched: [...new Set([...(current.matched || []), ...(incoming.matched || [])])],
@@ -105,13 +109,19 @@ export function verifyAndEnrich(jobs, { maxJobs = 12000, descriptionLimit = 1200
       const url = canonicalUrl(String(input.url || ""));
       const parsed = new URL(url);
       if (!title || !company || !["http:", "https:"].includes(parsed.protocol) || apiHosts.has(parsed.hostname)) throw new Error("invalid public job record");
+      const description = String(input.description || "");
+      const listedPay = String(input.pay || "").trim();
+      const hasListedPay = meaningful(listedPay);
+      const pay = hasListedPay ? listedPay : extractPay(description);
       const job = {
         ...input,
         title,
         company,
         url,
         location: String(input.location || "Not listed").trim() || "Not listed",
-        description: String(input.description || "").slice(0, descriptionLimit),
+        pay,
+        paySource: hasListedPay ? (input.paySource || "ATS field") : pay === "Not listed" ? "Not listed" : "Job description",
+        description: description.slice(0, descriptionLimit),
       };
       if (verified.has(url)) {
         duplicateCount += 1;
