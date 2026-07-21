@@ -1,0 +1,5 @@
+import type { Metadata } from "next";
+import { headers } from "next/headers";
+import "./globals.css";
+export async function generateMetadata():Promise<Metadata>{const values=await headers();const host=values.get("x-forwarded-host")||values.get("host")||"localhost:3000";const protocol=values.get("x-forwarded-proto")||(host.includes("localhost")?"http":"https");const image=`${protocol}://${host}/og.png`;return{title:"Job Compass — Focused job discovery",description:"Scan public career pages, match the roles that matter, add notes, and export a clean job-search CSV.",openGraph:{title:"Job Compass",description:"Find the roles worth your time.",type:"website",images:[{url:image,width:1734,height:907,alt:"Job Compass — Find the roles worth your time."}]},twitter:{card:"summary_large_image",title:"Job Compass",description:"Find the roles worth your time.",images:[image]}}}
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en"><body>{children}</body></html>}
