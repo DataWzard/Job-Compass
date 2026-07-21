@@ -76,7 +76,9 @@ const contextPattern = /salary|pay|compensation|base|wage|range|annual|annum|yea
 const bonusOnlyPattern = /(?:signing|annual|performance|target)\s+bonus/i;
 
 function unitNear(text, start, end) {
-  return normalizeUnit(text.slice(Math.max(0, start - 100), Math.min(text.length, end + 120)));
+  const afterRange = normalizeUnit(text.slice(end, Math.min(text.length, end + 120)));
+  if (afterRange) return afterRange;
+  return normalizeUnit(text.slice(Math.max(0, start - 80), start));
 }
 
 const salaryElementPattern = /<([a-z][\w:-]*)\b([^>]*(?:salary|compensation|pay|wage|remuneration)[^>]*)>([\s\S]*?)<\/\1>/gi;
@@ -89,21 +91,22 @@ function pairedSalary(text) {
   const min = amountValue(minimum[1]);
   const max = amountValue(maximum[1]);
   if (!min || !max || max < min) return PAY_NOT_LISTED;
-  const currency = currencyCode(text.match(/USD|US\$|CAD|CA\$|C\$|EUR|GBP|[$€£]/i)?.[0]);
-  return formatPay(min, max, currency, text);
+  const salaryContext = text.slice(minimum.index, Math.min(text.length, maximum.index + maximum[0].length + 160));
+  const currency = currencyCode(salaryContext.match(/USD|US\$|CAD|CA\$|C\$|EUR|GBP|[$€£]/i)?.[0]);
+  return formatPay(min, max, currency, salaryContext);
 }
 
 export function extractPayFromHtml(value = "") {
   const raw = decodeHtml(value);
   const visible = cleanHtml(raw);
-  const paired = pairedSalary(visible);
-  if (paired !== PAY_NOT_LISTED) return paired;
   for (const match of raw.matchAll(salaryElementPattern)) {
     const candidate = `compensation ${match[2]} ${cleanHtml(match[3])}`;
     const pay = extractPay(candidate);
     if (pay !== PAY_NOT_LISTED) return pay;
   }
-  return extractPay(visible);
+  const direct = extractPay(visible);
+  if (direct !== PAY_NOT_LISTED) return direct;
+  return pairedSalary(visible);
 }
 export function extractPay(value = "") {
   const text = cleanHtml(value);
