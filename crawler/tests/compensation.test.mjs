@@ -38,6 +38,11 @@ test("extracts an em pay paragraph and paired salary labels", () => {
     extractPayFromHtml('<em>The pay range for this position is expected to be between $100,000 - $125,000 per Year.</em>'),
     "$100,000–$125,000/yr",
   );
+  const bryce = '<li class="job-detail">Compensation: USD <span class="job-detail salary-value" data-value="100000">100,000</span> - USD <span class="job-detail salary-value" data-value="120000">120,000</span> - yearly</li>';
+  assert.equal(
+    extractPayFromHtml(bryce),
+    "$100,000\u2013$120,000/yr",
+  );
   const abbvie = '<p>Canadian teams may offer CAD compensation and flexible working hours.</p><li>Salary Min: <span class="salary-value" data-value="78500">78,500</span></li><li>Salary Max: <span class="salary-value" data-value="141000">141,000</span></li><li>Compensation: USD 78,500 - USD 141,000 - yearly</li>';
   assert.equal(extractPayFromHtml(abbvie), "$78,500–$141,000/yr");
 });

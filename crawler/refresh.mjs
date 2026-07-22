@@ -18,6 +18,7 @@ const workplace = (value = "") => /hybrid/i.test(value) ? "Hybrid" : /remote|wor
 const dateLabel = (value) => { const date = new Date(value || ""); return Number.isNaN(date.valueOf()) ? "Date not listed" : date.toISOString().slice(0, 10); };
 const payLabel = (min, max, currency = "USD", unit = "year") => formatPay(min || max, max || min, currency, unit);
 async function json(url) { const response = await fetch(url, { headers: { accept: "application/json", "user-agent": "JobCompassIndexer/1.0" }, signal: AbortSignal.timeout(timeout) }); if (!response.ok) throw new Error(`${response.status} ${url}`); return response.json(); }
+async function markup(url) { const response = await fetch(url, { headers: { accept: "text/html", "user-agent": "JobCompassIndexer/1.0" }, signal: AbortSignal.timeout(timeout) }); if (!response.ok) throw new Error(`${response.status} ${url}`); return response.text(); }
 async function mapLimit(items, limit, mapper) {
   const output = [];
   for (let start = 0; start < items.length; start += limit) output.push(...await Promise.all(items.slice(start, start + limit).map(mapper)));
@@ -37,17 +38,27 @@ async function smartrecruiters(source) {
   const companyId = encodeURIComponent(source.slug);
   const data = await json(`https://api.smartrecruiters.com/v1/companies/${companyId}/postings?limit=100`);
   const details = await mapLimit(data.content || [], 6, async summary => {
+    let job;
     try {
-      return await json(`https://api.smartrecruiters.com/v1/companies/${companyId}/postings/${encodeURIComponent(summary.id)}`);
+      job = await json(`https://api.smartrecruiters.com/v1/companies/${companyId}/postings/${encodeURIComponent(summary.id)}`);
     } catch {
-      return summary;
+      job = summary;
+    }
+    const slug = clean(job.name || summary.name).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    const publicUrl = `https://jobs.smartrecruiters.com/${source.slug}/${job.id || summary.id}-${slug}`;
+    const apiPay = extractPayFromHtml(sectionText(job));
+    if (apiPay !== "Not listed") return { ...job, _publicUrl: publicUrl, _publicPay: apiPay, _paySource: "ATS field" };
+    try {
+      const publicPay = extractPayFromHtml(await markup(publicUrl));
+      return { ...job, _publicUrl: publicUrl, _publicPay: publicPay, _paySource: publicPay === "Not listed" ? "Not listed" : "Job HTML" };
+    } catch {
+      return { ...job, _publicUrl: publicUrl, _publicPay: "Not listed", _paySource: "Not listed" };
     }
   });
   return details.map(job => {
     const location = [job.location?.city, job.location?.region, job.location?.country].filter(Boolean).join(", ") || "Not listed";
     const description = clean(sectionText(job));
-    const slug = clean(job.name).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-    return { id: `smartrecruiters-${job.id}`, title: job.name, company: job.company?.name || source.name, location, workplace: workplace(`${job.location?.remote ? "remote" : ""} ${job.name} ${description.slice(0, 1000)}`), pay: "Not listed", source: "SmartRecruiters", url: `https://jobs.smartrecruiters.com/${source.slug}/${job.id}-${slug}`, posted: dateLabel(job.releasedDate), matched: [], description };
+    return { id: `smartrecruiters-${job.id}`, title: job.name, company: job.company?.name || source.name, location, workplace: workplace(`${job.location?.remote ? "remote" : ""} ${job.name} ${description.slice(0, 1000)}`), pay: job._publicPay || "Not listed", paySource: job._paySource || "Not listed", source: "SmartRecruiters", url: job._publicUrl, posted: dateLabel(job.releasedDate), matched: [], description };
   });
 }
 function parseJobMarkup(markup, source, pageUrl) {
