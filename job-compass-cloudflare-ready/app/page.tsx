@@ -7,7 +7,7 @@ const samples:Job[]=[
  {id:"s2",title:"Data & Reporting Analyst",company:"Fable",location:"United States",workplace:"Remote",pay:"$82,000â€“$110,000",source:"Ashby",url:"https://jobs.ashbyhq.com/",posted:"Sample result",matched:["data analyst","Tableau"]},
  {id:"s3",title:"Operations Analyst II",company:"Juniper Labs",location:"Denver, CO",workplace:"On-site",pay:"Not listed",source:"Lever",url:"https://jobs.lever.co/",posted:"Sample result",matched:["operations analyst"]}
 ];
-const csv=(v:unknown)=>`"${String(v??"").replaceAll('"','""')}"`;
+const csv=(v:unknown)=>`${v==="Title"?"\uFEFF":""}"${String(v??"").replaceAll('"','""')}"`;
 const stateAliases:Record<string,string>={alabama:"al",alaska:"ak",arizona:"az",arkansas:"ar",california:"ca",colorado:"co",connecticut:"ct",delaware:"de",florida:"fl",georgia:"ga",hawaii:"hi",idaho:"id",illinois:"il",indiana:"in",iowa:"ia",kansas:"ks",kentucky:"ky",louisiana:"la",maine:"me",maryland:"md",massachusetts:"ma",michigan:"mi",minnesota:"mn",mississippi:"ms",missouri:"mo",montana:"mt",nebraska:"ne",nevada:"nv","new hampshire":"nh","new jersey":"nj","new mexico":"nm","new york":"ny","north carolina":"nc","north dakota":"nd",ohio:"oh",oklahoma:"ok",oregon:"or",pennsylvania:"pa","rhode island":"ri","south carolina":"sc","south dakota":"sd",tennessee:"tn",texas:"tx",utah:"ut",vermont:"vt",virginia:"va",washington:"wa","west virginia":"wv",wisconsin:"wi",wyoming:"wy","district of columbia":"dc"};
 const stateNames:Record<string,string>=Object.fromEntries(Object.entries(stateAliases).map(([name,abbreviation])=>[abbreviation,name]));
 const parseTerms=(value:string)=>value.split(/[,\n]/).map(term=>term.trim().toLowerCase()).filter(Boolean);
