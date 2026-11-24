@@ -36,6 +36,11 @@
   },
   {
     "type": "ashby",
+    "slug": "1five",
+    "name": "1five"
+  },
+  {
+    "type": "ashby",
     "slug": "1mind",
     "name": "1mind"
   },
@@ -166,8 +171,18 @@
   },
   {
     "type": "ashby",
+    "slug": "aaru",
+    "name": "aaru"
+  },
+  {
+    "type": "ashby",
     "slug": "abacum",
     "name": "abacum"
+  },
+  {
+    "type": "ashby",
+    "slug": "abaka.ai",
+    "name": "abaka.ai"
   },
   {
     "type": "ashby",
@@ -183,6 +198,11 @@
     "type": "ashby",
     "slug": "Abe",
     "name": "Abe"
+  },
+  {
+    "type": "ashby",
+    "slug": "Abode%20Money",
+    "name": "Abode%20Money"
   },
   {
     "type": "ashby",
@@ -203,6 +223,11 @@
     "type": "ashby",
     "slug": "Abridge",
     "name": "Abridge"
+  },
+  {
+    "type": "ashby",
+    "slug": "absci",
+    "name": "absci"
   },
   {
     "type": "ashby",
@@ -233,6 +258,11 @@
     "type": "ashby",
     "slug": "access",
     "name": "access"
+  },
+  {
+    "type": "ashby",
+    "slug": "accord",
+    "name": "accord"
   },
   {
     "type": "ashby",
@@ -298,6 +328,11 @@
     "type": "ashby",
     "slug": "across-ai",
     "name": "across-ai"
+  },
+  {
+    "type": "ashby",
+    "slug": "act-security",
+    "name": "act-security"
   },
   {
     "type": "ashby",
@@ -741,6 +776,11 @@
   },
   {
     "type": "ashby",
+    "slug": "algo1",
+    "name": "algo1"
+  },
+  {
+    "type": "ashby",
     "slug": "aligned",
     "name": "aligned"
   },
@@ -848,6 +888,11 @@
     "type": "ashby",
     "slug": "alpic",
     "name": "alpic"
+  },
+  {
+    "type": "ashby",
+    "slug": "alt",
+    "name": "alt"
   },
   {
     "type": "ashby",
@@ -966,6 +1011,11 @@
   },
   {
     "type": "ashby",
+    "slug": "americansupercritical",
+    "name": "americansupercritical"
+  },
+  {
+    "type": "ashby",
     "slug": "ami",
     "name": "ami"
   },
@@ -1036,6 +1086,21 @@
   },
   {
     "type": "ashby",
+    "slug": "anatomy-financial",
+    "name": "anatomy-financial"
+  },
+  {
+    "type": "ashby",
+    "slug": "ande",
+    "name": "ande"
+  },
+  {
+    "type": "ashby",
+    "slug": "andel",
+    "name": "andel"
+  },
+  {
+    "type": "ashby",
     "slug": "andela",
     "name": "andela"
   },
@@ -1076,6 +1141,11 @@
   },
   {
     "type": "ashby",
+    "slug": "anima",
+    "name": "anima"
+  },
+  {
+    "type": "ashby",
     "slug": "Anima",
     "name": "Anima"
   },
@@ -1103,6 +1173,11 @@
     "type": "ashby",
     "slug": "Anon",
     "name": "Anon"
+  },
+  {
+    "type": "ashby",
+    "slug": "Anori",
+    "name": "Anori"
   },
   {
     "type": "ashby",
@@ -1161,6 +1236,11 @@
   },
   {
     "type": "ashby",
+    "slug": "antioch",
+    "name": "antioch"
+  },
+  {
+    "type": "ashby",
     "slug": "antithesis",
     "name": "antithesis"
   },
@@ -1173,6 +1253,11 @@
     "type": "ashby",
     "slug": "anuvaya",
     "name": "anuvaya"
+  },
+  {
+    "type": "ashby",
+    "slug": "anvil-robotics",
+    "name": "anvil-robotics"
   },
   {
     "type": "ashby",
@@ -1551,6 +1636,11 @@
   },
   {
     "type": "ashby",
+    "slug": "artificial",
+    "name": "artificial"
+  },
+  {
+    "type": "ashby",
     "slug": "artificial.agency",
     "name": "artificial.agency"
   },
@@ -1681,6 +1771,11 @@
   },
   {
     "type": "ashby",
+    "slug": "AstralisFoundation",
+    "name": "AstralisFoundation"
+  },
+  {
+    "type": "ashby",
     "slug": "astro-mechanica",
     "name": "astro-mechanica"
   },
@@ -1698,6 +1793,11 @@
     "type": "ashby",
     "slug": "astronomer",
     "name": "astronomer"
+  },
+  {
+    "type": "ashby",
+    "slug": "astroscale-us",
+    "name": "astroscale-us"
   },
   {
     "type": "ashby",
@@ -1781,6 +1881,11 @@
   },
   {
     "type": "ashby",
+    "slug": "atolio",
+    "name": "atolio"
+  },
+  {
+    "type": "ashby",
     "slug": "Atolio",
     "name": "Atolio"
   },
@@ -1861,6 +1966,11 @@
   },
   {
     "type": "ashby",
+    "slug": "augrade",
+    "name": "augrade"
+  },
+  {
+    "type": "ashby",
     "slug": "augur",
     "name": "augur"
   },
@@ -1916,6 +2026,11 @@
   },
   {
     "type": "ashby",
+    "slug": "avartha",
+    "name": "avartha"
+  },
+  {
+    "type": "ashby",
     "slug": "avelios-medical",
     "name": "avelios-medical"
   },
@@ -1946,6 +2061,11 @@
   },
   {
     "type": "ashby",
+    "slug": "axiom",
+    "name": "axiom"
+  },
+  {
+    "type": "ashby",
     "slug": "axion",
     "name": "axion"
   },
@@ -1953,6 +2073,21 @@
     "type": "ashby",
     "slug": "axle-careers",
     "name": "axle-careers"
+  },
+  {
+    "type": "ashby",
+    "slug": "axle-health",
+    "name": "axle-health"
+  },
+  {
+    "type": "ashby",
+    "slug": "babbel",
+    "name": "babbel"
+  },
+  {
+    "type": "ashby",
+    "slug": "backbone",
+    "name": "backbone"
   },
   {
     "type": "ashby",
@@ -2006,6 +2141,16 @@
   },
   {
     "type": "ashby",
+    "slug": "Bastion",
+    "name": "Bastion"
+  },
+  {
+    "type": "ashby",
+    "slug": "beaconholdings",
+    "name": "beaconholdings"
+  },
+  {
+    "type": "ashby",
     "slug": "beaconsoftware",
     "name": "beaconsoftware"
   },
@@ -2013,6 +2158,11 @@
     "type": "ashby",
     "slug": "beam-up",
     "name": "beam-up"
+  },
+  {
+    "type": "ashby",
+    "slug": "beamery",
+    "name": "beamery"
   },
   {
     "type": "ashby",
@@ -2033,6 +2183,11 @@
     "type": "ashby",
     "slug": "bem",
     "name": "bem"
+  },
+  {
+    "type": "ashby",
+    "slug": "ben",
+    "name": "ben"
   },
   {
     "type": "ashby",
@@ -2121,6 +2276,16 @@
   },
   {
     "type": "ashby",
+    "slug": "blackbird-labs-inc",
+    "name": "blackbird-labs-inc"
+  },
+  {
+    "type": "ashby",
+    "slug": "Blackpoint%20Cyber",
+    "name": "Blackpoint%20Cyber"
+  },
+  {
+    "type": "ashby",
     "slug": "blacksemiconductor",
     "name": "blacksemiconductor"
   },
@@ -2128,6 +2293,16 @@
     "type": "ashby",
     "slug": "blacksmith",
     "name": "blacksmith"
+  },
+  {
+    "type": "ashby",
+    "slug": "bland",
+    "name": "bland"
+  },
+  {
+    "type": "ashby",
+    "slug": "blissway",
+    "name": "blissway"
   },
   {
     "type": "ashby",
@@ -2166,6 +2341,31 @@
   },
   {
     "type": "ashby",
+    "slug": "blvdrecruiting",
+    "name": "blvdrecruiting"
+  },
+  {
+    "type": "ashby",
+    "slug": "boam",
+    "name": "boam"
+  },
+  {
+    "type": "ashby",
+    "slug": "bodysoul",
+    "name": "bodysoul"
+  },
+  {
+    "type": "ashby",
+    "slug": "boldgames",
+    "name": "boldgames"
+  },
+  {
+    "type": "ashby",
+    "slug": "boom",
+    "name": "boom"
+  },
+  {
+    "type": "ashby",
     "slug": "boon",
     "name": "boon"
   },
@@ -2173,6 +2373,16 @@
     "type": "ashby",
     "slug": "braintrust",
     "name": "braintrust"
+  },
+  {
+    "type": "ashby",
+    "slug": "branchinsurance",
+    "name": "branchinsurance"
+  },
+  {
+    "type": "ashby",
+    "slug": "BranchInsurance",
+    "name": "BranchInsurance"
   },
   {
     "type": "ashby",
@@ -2186,6 +2396,11 @@
   },
   {
     "type": "ashby",
+    "slug": "bridgepoint-consulting",
+    "name": "bridgepoint-consulting"
+  },
+  {
+    "type": "ashby",
     "slug": "brightwheel",
     "name": "brightwheel"
   },
@@ -2196,8 +2411,23 @@
   },
   {
     "type": "ashby",
+    "slug": "brooklinen",
+    "name": "brooklinen"
+  },
+  {
+    "type": "ashby",
     "slug": "brooklyn-health",
     "name": "brooklyn-health"
+  },
+  {
+    "type": "ashby",
+    "slug": "bunch",
+    "name": "bunch"
+  },
+  {
+    "type": "ashby",
+    "slug": "bunkerhillhealth",
+    "name": "bunkerhillhealth"
   },
   {
     "type": "ashby",
@@ -2271,8 +2501,18 @@
   },
   {
     "type": "ashby",
+    "slug": "careers.mural",
+    "name": "careers.mural"
+  },
+  {
+    "type": "ashby",
     "slug": "careerstrengo",
     "name": "careerstrengo"
+  },
+  {
+    "type": "ashby",
+    "slug": "cari",
+    "name": "cari"
   },
   {
     "type": "ashby",
@@ -2291,8 +2531,18 @@
   },
   {
     "type": "ashby",
+    "slug": "catio",
+    "name": "catio"
+  },
+  {
+    "type": "ashby",
     "slug": "causal",
     "name": "causal"
+  },
+  {
+    "type": "ashby",
+    "slug": "causaprima",
+    "name": "causaprima"
   },
   {
     "type": "ashby",
@@ -2308,6 +2558,16 @@
     "type": "ashby",
     "slug": "centivo",
     "name": "centivo"
+  },
+  {
+    "type": "ashby",
+    "slug": "centralize",
+    "name": "centralize"
+  },
+  {
+    "type": "ashby",
+    "slug": "century.health",
+    "name": "century.health"
   },
   {
     "type": "ashby",
@@ -2331,6 +2591,16 @@
   },
   {
     "type": "ashby",
+    "slug": "chainlink-labs",
+    "name": "chainlink-labs"
+  },
+  {
+    "type": "ashby",
+    "slug": "chambercardio",
+    "name": "chambercardio"
+  },
+  {
+    "type": "ashby",
     "slug": "character",
     "name": "character"
   },
@@ -2338,6 +2608,11 @@
     "type": "ashby",
     "slug": "charge-robotics",
     "name": "charge-robotics"
+  },
+  {
+    "type": "ashby",
+    "slug": "chariotclaims",
+    "name": "chariotclaims"
   },
   {
     "type": "ashby",
@@ -2361,8 +2636,28 @@
   },
   {
     "type": "ashby",
+    "slug": "chiefai",
+    "name": "chiefai"
+  },
+  {
+    "type": "ashby",
     "slug": "choco",
     "name": "choco"
+  },
+  {
+    "type": "ashby",
+    "slug": "Chromatic",
+    "name": "Chromatic"
+  },
+  {
+    "type": "ashby",
+    "slug": "circleback",
+    "name": "circleback"
+  },
+  {
+    "type": "ashby",
+    "slug": "ciroos",
+    "name": "ciroos"
   },
   {
     "type": "ashby",
@@ -2371,8 +2666,43 @@
   },
   {
     "type": "ashby",
+    "slug": "Civic%20Roundtable",
+    "name": "Civic%20Roundtable"
+  },
+  {
+    "type": "ashby",
     "slug": "civilgrid",
     "name": "civilgrid"
+  },
+  {
+    "type": "ashby",
+    "slug": "clarasight",
+    "name": "clarasight"
+  },
+  {
+    "type": "ashby",
+    "slug": "claritypay",
+    "name": "claritypay"
+  },
+  {
+    "type": "ashby",
+    "slug": "ClassDojo",
+    "name": "ClassDojo"
+  },
+  {
+    "type": "ashby",
+    "slug": "claylabs",
+    "name": "claylabs"
+  },
+  {
+    "type": "ashby",
+    "slug": "clearly-ai",
+    "name": "clearly-ai"
+  },
+  {
+    "type": "ashby",
+    "slug": "clearvector",
+    "name": "clearvector"
   },
   {
     "type": "ashby",
@@ -2401,8 +2731,18 @@
   },
   {
     "type": "ashby",
+    "slug": "clipbook",
+    "name": "clipbook"
+  },
+  {
+    "type": "ashby",
     "slug": "clubhouse",
     "name": "clubhouse"
+  },
+  {
+    "type": "ashby",
+    "slug": "cluely",
+    "name": "cluely"
   },
   {
     "type": "ashby",
@@ -2431,8 +2771,18 @@
   },
   {
     "type": "ashby",
+    "slug": "Coder",
+    "name": "Coder"
+  },
+  {
+    "type": "ashby",
     "slug": "coderabbit",
     "name": "coderabbit"
+  },
+  {
+    "type": "ashby",
+    "slug": "codes-health",
+    "name": "codes-health"
   },
   {
     "type": "ashby",
@@ -2466,8 +2816,28 @@
   },
   {
     "type": "ashby",
+    "slug": "coinflow",
+    "name": "coinflow"
+  },
+  {
+    "type": "ashby",
     "slug": "cointracker",
     "name": "cointracker"
+  },
+  {
+    "type": "ashby",
+    "slug": "colibri-group",
+    "name": "colibri-group"
+  },
+  {
+    "type": "ashby",
+    "slug": "collective",
+    "name": "collective"
+  },
+  {
+    "type": "ashby",
+    "slug": "collegevine.com",
+    "name": "collegevine.com"
   },
   {
     "type": "ashby",
@@ -2476,8 +2846,23 @@
   },
   {
     "type": "ashby",
+    "slug": "colonist",
+    "name": "colonist"
+  },
+  {
+    "type": "ashby",
     "slug": "Commure",
     "name": "Commure"
+  },
+  {
+    "type": "ashby",
+    "slug": "como",
+    "name": "como"
+  },
+  {
+    "type": "ashby",
+    "slug": "compiled-health",
+    "name": "compiled-health"
   },
   {
     "type": "ashby",
@@ -2491,13 +2876,53 @@
   },
   {
     "type": "ashby",
+    "slug": "composite",
+    "name": "composite"
+  },
+  {
+    "type": "ashby",
     "slug": "compoundcontentstudio",
     "name": "compoundcontentstudio"
   },
   {
     "type": "ashby",
+    "slug": "concoursetech",
+    "name": "concoursetech"
+  },
+  {
+    "type": "ashby",
+    "slug": "conduct",
+    "name": "conduct"
+  },
+  {
+    "type": "ashby",
+    "slug": "conductor",
+    "name": "conductor"
+  },
+  {
+    "type": "ashby",
+    "slug": "conductorai",
+    "name": "conductorai"
+  },
+  {
+    "type": "ashby",
+    "slug": "conduit",
+    "name": "conduit"
+  },
+  {
+    "type": "ashby",
     "slug": "conduit-health",
     "name": "conduit-health"
+  },
+  {
+    "type": "ashby",
+    "slug": "confiant",
+    "name": "confiant"
+  },
+  {
+    "type": "ashby",
+    "slug": "confido",
+    "name": "confido"
   },
   {
     "type": "ashby",
@@ -2531,8 +2956,23 @@
   },
   {
     "type": "ashby",
+    "slug": "conveydev",
+    "name": "conveydev"
+  },
+  {
+    "type": "ashby",
     "slug": "corridor",
     "name": "corridor"
+  },
+  {
+    "type": "ashby",
+    "slug": "corti",
+    "name": "corti"
+  },
+  {
+    "type": "ashby",
+    "slug": "counsel",
+    "name": "counsel"
   },
   {
     "type": "ashby",
@@ -2548,6 +2988,11 @@
     "type": "ashby",
     "slug": "creatoriq",
     "name": "creatoriq"
+  },
+  {
+    "type": "ashby",
+    "slug": "crewcarbon",
+    "name": "crewcarbon"
   },
   {
     "type": "ashby",
@@ -2611,13 +3056,123 @@
   },
   {
     "type": "ashby",
+    "slug": "cybcube",
+    "name": "cybcube"
+  },
+  {
+    "type": "ashby",
+    "slug": "cyberhaven",
+    "name": "cyberhaven"
+  },
+  {
+    "type": "ashby",
     "slug": "cylake-inc",
     "name": "cylake-inc"
   },
   {
     "type": "ashby",
+    "slug": "cytix",
+    "name": "cytix"
+  },
+  {
+    "type": "ashby",
+    "slug": "cytora.com",
+    "name": "cytora.com"
+  },
+  {
+    "type": "ashby",
     "slug": "cyvl",
     "name": "cyvl"
+  },
+  {
+    "type": "ashby",
+    "slug": "dakota",
+    "name": "dakota"
+  },
+  {
+    "type": "ashby",
+    "slug": "dandelion",
+    "name": "dandelion"
+  },
+  {
+    "type": "ashby",
+    "slug": "dandelionhealth",
+    "name": "dandelionhealth"
+  },
+  {
+    "type": "ashby",
+    "slug": "dandy",
+    "name": "dandy"
+  },
+  {
+    "type": "ashby",
+    "slug": "dash0",
+    "name": "dash0"
+  },
+  {
+    "type": "ashby",
+    "slug": "datatonic",
+    "name": "datatonic"
+  },
+  {
+    "type": "ashby",
+    "slug": "dave",
+    "name": "dave"
+  },
+  {
+    "type": "ashby",
+    "slug": "dayhoff-labs",
+    "name": "dayhoff-labs"
+  },
+  {
+    "type": "ashby",
+    "slug": "deaa6ad2-d184-436b-b69e-17f761da1d94",
+    "name": "deaa6ad2-d184-436b-b69e-17f761da1d94"
+  },
+  {
+    "type": "ashby",
+    "slug": "decagon",
+    "name": "decagon"
+  },
+  {
+    "type": "ashby",
+    "slug": "deepgram",
+    "name": "deepgram"
+  },
+  {
+    "type": "ashby",
+    "slug": "Deepgram",
+    "name": "Deepgram"
+  },
+  {
+    "type": "ashby",
+    "slug": "Deepnote",
+    "name": "Deepnote"
+  },
+  {
+    "type": "ashby",
+    "slug": "deepslate",
+    "name": "deepslate"
+  },
+  {
+    "type": "ashby",
+    "slug": "definelycareers",
+    "name": "definelycareers"
+  },
+  {
+    "type": "ashby",
+    "slug": "delphi",
+    "name": "delphi"
+  },
+  {
+    "type": "ashby",
+    "slug": "delplayagroup",
+    "name": "delplayagroup"
+  },
+  {
+    "type": "ashby",
+    "slug": "demandbase",
+    "name": "demandbase"
   },
   {
     "type": "greenhouse",
@@ -3211,12 +3766,22 @@
   },
   {
     "type": "page",
+    "url": "https://11bitstudios.recruitee.com/o/expert-gameplay-programmer-unannounced-project",
+    "name": "11bitstudios.recruitee.com"
+  },
+  {
+    "type": "page",
     "url": "https://11bitstudios.recruitee.com/o/game-director-unannounced-project",
     "name": "11bitstudios.recruitee.com"
   },
   {
     "type": "page",
     "url": "https://11bitstudios.recruitee.com/o/lead-designer-unannounced-project",
+    "name": "11bitstudios.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://11bitstudios.recruitee.com/o/level-designer-p13",
     "name": "11bitstudios.recruitee.com"
   },
   {
@@ -3241,6 +3806,16 @@
   },
   {
     "type": "page",
+    "url": "https://12build.recruitee.com/o/afstudeerstage-marketing",
+    "name": "12build.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://12build.recruitee.com/o/afstudeerstage-marketing?lang=nl",
+    "name": "12build.recruitee.com"
+  },
+  {
+    "type": "page",
     "url": "https://12build.recruitee.com/o/agentic-automation-test-engineer",
     "name": "12build.recruitee.com"
   },
@@ -3252,6 +3827,21 @@
   {
     "type": "page",
     "url": "https://12build.recruitee.com/o/agentic-automation-test-engineer?lang=nl",
+    "name": "12build.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://12build.recruitee.com/o/ai-operations-lead",
+    "name": "12build.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://12build.recruitee.com/o/ai-operations-lead?lang=en",
+    "name": "12build.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://12build.recruitee.com/o/ai-operations-lead?lang=nl",
     "name": "12build.recruitee.com"
   },
   {
@@ -3303,6 +3893,16 @@
     "type": "page",
     "url": "https://12build.recruitee.com/o/sr-international-marketing-manager?lang=en",
     "name": "12build.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://12build.recruitee.com/o/stagiaire-marketing",
+    "name": "12build.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://1daysooner.recruitee.com/o/clinical-trial-abundance-advocacy-lead",
+    "name": "1daysooner.recruitee.com"
   },
   {
     "type": "page",
@@ -3516,6 +4116,16 @@
   },
   {
     "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/area-manager-mwd-suddeutschland",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/area-manager-mwd-suddeutschland?lang=de",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
     "url": "https://60secondstonapoli.recruitee.com/o/barkeeper-mwd-12",
     "name": "60secondstonapoli.recruitee.com"
   },
@@ -3676,6 +4286,16 @@
   },
   {
     "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/barkeeper-mwd-in-teilzeit-18",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/barkeeper-mwd-in-teilzeit-18?lang=de",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
     "url": "https://60secondstonapoli.recruitee.com/o/barkeeper-mwd-in-teilzeit-2?lang=de",
     "name": "60secondstonapoli.recruitee.com"
   },
@@ -3747,6 +4367,26 @@
   {
     "type": "page",
     "url": "https://60secondstonapoli.recruitee.com/o/barkeeper-mwd-minijob-13?lang=de",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/bartender-barkeeper-mwd",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/bartender-barkeeper-mwd-part-time",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/bartender-barkeeper-mwd-part-time?lang=de",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/bartender-barkeeper-mwd?lang=de",
     "name": "60secondstonapoli.recruitee.com"
   },
   {
@@ -3956,7 +4596,47 @@
   },
   {
     "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/dishwasher-spulkraft-afwasser-keukenhulp-mwd",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/dishwasher-spulkraft-afwasser-keukenhulp-mwd-part-time",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/dishwasher-spulkraft-afwasser-keukenhulp-mwd-part-time?lang=de",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/dishwasher-spulkraft-afwasser-keukenhulp-mwd?lang=de",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
     "url": "https://60secondstonapoli.recruitee.com/o/finanzbuchhalter-accountant-mwd-2-4?lang=de",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/finanzbuchhalter-mwd",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/finanzbuchhalter-mwd?lang=de",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/head-of-social-media-content-creation-mwd",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/head-of-social-media-content-creation-mwd?lang=de",
     "name": "60secondstonapoli.recruitee.com"
   },
   {
@@ -4007,6 +4687,26 @@
   {
     "type": "page",
     "url": "https://60secondstonapoli.recruitee.com/o/hostess-host-mwd-in-vollzeit?lang=de",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/kitchen-help-food-preparation-kuchenhilfe-vorbereitung-keukenvoorbereider-mwd",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/kitchen-help-food-preparation-kuchenhilfe-vorbereitung-keukenvoorbereider-mwd-part-time",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/kitchen-help-food-preparation-kuchenhilfe-vorbereitung-keukenvoorbereider-mwd-part-time?lang=de",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/kitchen-help-food-preparation-kuchenhilfe-vorbereitung-keukenvoorbereider-mwd?lang=de",
     "name": "60secondstonapoli.recruitee.com"
   },
   {
@@ -4082,6 +4782,26 @@
   {
     "type": "page",
     "url": "https://60secondstonapoli.recruitee.com/o/kuchenhilfe-vorbereitung-mwd-35?lang=de",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/kuchenhilfe-vorbereitung-mwd-36",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/kuchenhilfe-vorbereitung-mwd-36?lang=de",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/kuchenhilfe-vorbereitung-mwd-37",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/kuchenhilfe-vorbereitung-mwd-37?lang=de",
     "name": "60secondstonapoli.recruitee.com"
   },
   {
@@ -4331,7 +5051,57 @@
   },
   {
     "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/pizzabacker-pizzaiolo-mwd-weltweit-full-time-part-time",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/pizzabacker-pizzaiolo-mwd-weltweit-full-time-part-time?lang=de",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/pizzabacker-pizzaiolo-mwd-weltweit-full-time-part-time?lang=en",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/pizzabacker-pizzaiolo-mwd-weltweit-full-time-part-time?lang=it",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
     "url": "https://60secondstonapoli.recruitee.com/o/pizzapass-mwd",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/restaurant-manager-betriebsleitung-bedrijfsleider-mwd",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/restaurant-manager-betriebsleitung-bedrijfsleider-mwd?lang=de",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/restaurant-service-servicekraft-medewerker-bediening-mwd",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/restaurant-service-servicekraft-medewerker-bediening-mwd-part-time",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/restaurant-service-servicekraft-medewerker-bediening-mwd-part-time?lang=de",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/restaurant-service-servicekraft-medewerker-bediening-mwd?lang=de",
     "name": "60secondstonapoli.recruitee.com"
   },
   {
@@ -4822,6 +5592,16 @@
   {
     "type": "page",
     "url": "https://60secondstonapoli.recruitee.com/o/videograph-cutter-mwd",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/werkstudent-projektmanagement-backoffice-mwd",
+    "name": "60secondstonapoli.recruitee.com"
+  },
+  {
+    "type": "page",
+    "url": "https://60secondstonapoli.recruitee.com/o/werkstudent-projektmanagement-backoffice-mwd?lang=de",
     "name": "60secondstonapoli.recruitee.com"
   },
   {
@@ -16538,6 +17318,11 @@
     "type": "smartrecruiters",
     "slug": "2NTELEKOMUNIKACEAs",
     "name": "2NTELEKOMUNIKACEAs"
+  },
+  {
+    "type": "smartrecruiters",
+    "slug": "2Talent-MijnNieuweCarriere",
+    "name": "2Talent-MijnNieuweCarriere"
   },
   {
     "type": "smartrecruiters",
